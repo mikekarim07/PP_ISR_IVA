@@ -23,35 +23,30 @@ st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
 
-# Auxiliar = []
-# Balanza = []
-# Customer = []
+tab1, tab2, tab3 = st.tabs(["Auxiliar", "Balanza", "Customer"])
 
-tab1, tab2, tab3, tab4 = st.tabs(["Carga de Archivos", "Auxiliar", "Balanza", "Customer"])
-
-with tab1:
-    # st.caption('Cargar el Auxiliar del periodo')
-    Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
-    if Auxiliar_uploaded_file:
-        st.markdown('---')
-        Auxiliar = pd.read_excel(Auxiliar_uploaded_file, engine='openpyxl', skiprows=5, 
+# st.caption('Cargar el Auxiliar del periodo')
+Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
+if Auxiliar_uploaded_file:
+    st.markdown('---')
+    Auxiliar = pd.read_excel(Auxiliar_uploaded_file, engine='openpyxl', skiprows=5, 
                             dtype = {'Period': str, 'Account': str, 'DocumentNo': str, 'Document Header Text': str,
                                 'Cost Ctr': str, 'Assignment': str,})
 
 
-    Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
-    if Balanza_uploaded_file:
-        st.markdown('---')
-        Balanza = pd.read_csv(Balanza_uploaded_file, sep='|', header=None,
+Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
+if Balanza_uploaded_file:
+    st.markdown('---')
+    Balanza = pd.read_csv(Balanza_uploaded_file, sep='|', header=None,
                           names=['Account', 'Description', 'Saldo Inicial', 'Cargos', 'Abonos', 'Saldo Final', 'CoCode'], encoding='iso-8859-1',
                           dtype = {'Account': str, 'Description': str, 'CoCode': str,})
 
 
 
-    Customer_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el customer del periodo', type='xlsx')
-    if Customer_uploaded_file:
-        st.markdown('---')
-        Customer = pd.read_excel(Customer_uploaded_file, engine='openpyxl',
+Customer_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el customer del periodo', type='xlsx')
+if Customer_uploaded_file:
+    st.markdown('---')
+    Customer = pd.read_excel(Customer_uploaded_file, engine='openpyxl',
                         names=['Varios', '*', 'St', 'Assignment', 'Nombres', 'DocumentNo', 'Typ', 'LCurr', 'Clrng doc.', 'Tx',
                               'Doc. Date', 'Reference', 'Text', 'Amt in loc.cur.', 'Customer'],
                         index_col=None)
@@ -67,8 +62,8 @@ with tab1:
     #                         dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
     
 
-with tab2:
-    if Auxiliar is not None and not Auxiliar.empty:
+with tab1:
+   
         Auxiliar = Auxiliar.dropna(subset=['Account'])
         Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
         Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
@@ -79,7 +74,7 @@ with tab2:
         st.divider()
 
 
-with tab3:
+with tab2:
     st.subheader('Balanza')
     st.dataframe(Balanza)
     st.write(Balanza.shape)
@@ -98,7 +93,7 @@ with tab3:
             return None
 
 
-with tab4:    
+with tab3:    
     Customer['CoCode'] = Customer.apply(company_code, axis=1)    
     Customer['CustomerName'] = Customer.apply(customername, axis=1)
     Customer['CoCode'].fillna(method='ffill', inplace=True)
