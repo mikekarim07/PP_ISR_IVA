@@ -22,6 +22,11 @@ st.subheader('Cargar los siguientes archivos: Auxiliar, Balanza y Customer del p
 st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
+
+Auxiliar = []
+Balanza = []
+Customer = []
+
 tab1, tab2, tab3, tab4 = st.tabs(["Carga de Archivos", "Auxiliar", "Balanza", "Customer"])
 
 with tab1:
