@@ -23,9 +23,9 @@ st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
 
-Auxiliar = []
-Balanza = []
-Customer = []
+# Auxiliar = []
+# Balanza = []
+# Customer = []
 
 tab1, tab2, tab3, tab4 = st.tabs(["Carga de Archivos", "Auxiliar", "Balanza", "Customer"])
 
