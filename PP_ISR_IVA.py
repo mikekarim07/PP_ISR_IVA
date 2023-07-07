@@ -59,6 +59,7 @@ if Customer_uploaded_file:
     Auxiliar = Auxiliar[Auxiliar['Monto']<0]
     Auxiliar = Auxiliar.groupby(by=['Account', 'CoCode'], as_index=False)['Monto'].sum()
     Auxiliar['Monto'] = Auxiliar['Monto'].abs()
+    Auxiliar['Source'] = 'Auxiliar'
     st.subheader('Auxiliar')
     st.dataframe(Auxiliar)
     st.write(Auxiliar.shape)
