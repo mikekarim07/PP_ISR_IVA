@@ -25,7 +25,11 @@ st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
 
-
+Cat_ctas_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el Catalogo de Cuentas', type='xlsx')
+if Cat_ctas_uploaded_file:
+    st.markdown('---')
+    Catalogo = pd.read_excel(Auxiliar_uploaded_file, engine='openpyxl',
+                            dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
 
 # st.caption('Cargar el Auxiliar del periodo')
 Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
@@ -35,15 +39,12 @@ if Auxiliar_uploaded_file:
                             dtype = {'Period': str, 'Account': str, 'DocumentNo': str, 'Document Header Text': str,
                                 'Cost Ctr': str, 'Assignment': str,})
 
-
 Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
 if Balanza_uploaded_file:
     st.markdown('---')
     Balanza = pd.read_csv(Balanza_uploaded_file, sep='|', header=None,
                           names=['Account', 'Description', 'Saldo Inicial', 'Cargos', 'Abonos', 'Saldo Final', 'CoCode'], encoding='iso-8859-1',
                           dtype = {'Account': str, 'Description': str, 'CoCode': str,})
-
-
 
 Customer_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el customer del periodo', type='xlsx')
 if Customer_uploaded_file:
@@ -53,19 +54,6 @@ if Customer_uploaded_file:
                               'Doc. Date', 'Reference', 'Text', 'Amt in loc.cur.', 'Customer'],
                         index_col=None)
 
-#Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
-#if Balanza_uploaded_file:
-#    st.markdown('---')
-#    with codecs.open(Balanza_uploaded_file, 'r', 'iso-8859-1') as f:
-#        Balanza = pd.read_csv(f, sep='|', header=None,
-#                          names=['Account', 'Description', 'Saldo Inicial', 'Cargos', 'Abonos', 'Saldo Final', 'CoCode'])
-    #Balanza = pd.read_excel(Balanza_uploaded_file,
-    #                          sheet_name = 'GL_Accounts', engine='openpyxl',
-    #                         dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
-    
-
-
-   
     Auxiliar = Auxiliar.dropna(subset=['Account'])
     Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
     Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
@@ -75,9 +63,8 @@ if Customer_uploaded_file:
     st.write(Auxiliar.shape)
     st.divider()
 
-
-
     st.subheader('Balanza')
+    Balanza['Monto'] = Balanza['Saldo Final'] - Balanza['Saldo Inicial']
     st.dataframe(Balanza)
     st.write(Balanza.shape)
     st.divider()
