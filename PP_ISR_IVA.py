@@ -61,19 +61,19 @@ with col3:
     #                          sheet_name = 'GL_Accounts', engine='openpyxl',
     #                         dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
     
-    Auxiliar = Auxiliar.dropna(subset=['Account'])
-    Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
-    Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
-    Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
-    st.subheader('Auxiliar')
-    st.dataframe(Auxiliar)
-    st.write(Auxiliar.shape)
-    st.divider()
+Auxiliar = Auxiliar.dropna(subset=['Account'])
+Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
+Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
+Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
+st.subheader('Auxiliar')
+st.dataframe(Auxiliar)
+st.write(Auxiliar.shape)
+st.divider()
     
-    st.subheader('Balanza')
-    st.dataframe(Balanza)
-    st.write(Balanza.shape)
-    st.divider()
+st.subheader('Balanza')
+st.dataframe(Balanza)
+st.write(Balanza.shape)
+st.divider()
     
     def company_code(row):
         if row['Varios'] == ' Company Code':
