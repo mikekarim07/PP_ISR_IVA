@@ -66,8 +66,9 @@ if Customer_uploaded_file:
 
     st.subheader('Balanza')
     Balanza['Monto'] = Balanza['Saldo Final'] - Balanza['Saldo Inicial']
-    
+    Balanza[['Account']] = Balanza[['Account']].apply(pd.to_numeric)
     Balanza = Balanza[Balanza['Account']>2000000000]
+    Balanza[['Account']] = Balanza[['Account']].astype('string')
     st.dataframe(Balanza)
     st.write(Balanza.shape)
     st.divider()
