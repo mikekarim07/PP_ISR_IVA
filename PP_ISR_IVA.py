@@ -101,7 +101,7 @@ if Customer_uploaded_file:
     Customer = Customer[Customer['Customer']!='Customer']
     Customer['Tx'].fillna('OK', inplace=True)
     Customer = Customer[(Customer['Tx'] == 'EG') | (Customer['Tx'] == 'OK')]
-    Customer = Customer[(Customer['CoCode'] == 'GSMX') | (Customer['CoCode'] == 'KSMX') | (Customer['CoCode'] == 'SAMX')]
+    Customer = Customer[(Customer['CoCode'] == 'ABMX') | (Customer['CoCode'] == 'AFMX') | (Customer['CoCode'] == 'AHMX')]
     Customer = Customer.groupby(by=['Customer', 'Tx', 'CoCode'], as_index=False)['Amt in loc.cur.'].sum()
     
     def montosiniva(row):
