@@ -17,6 +17,7 @@ directory = os.getcwd()
 
 
 st.set_page_config(page_title='TAX - Pago Provisional')
+st.image(Diseño sin título.png)
 st.title('Cálculo del Pago Provisional 📈')
 st.subheader('Cargar los siguientes archivos: Auxiliar, Balanza y Customer del periodo')
 st.write(directory)
