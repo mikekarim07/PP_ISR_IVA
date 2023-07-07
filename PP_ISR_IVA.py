@@ -125,7 +125,7 @@ if Customer_uploaded_file:
     aux_bal = pd.concat([Auxiliar, Balanza])
     aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
     aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
-    aux_bal['clas'] = Customer.apply(activa, axis=1)   
+    aux_bal = activa(aux_bal)
     alldata = pd.concat([aux_bal,Customer])
     # alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
     st.dataframe(alldata)
