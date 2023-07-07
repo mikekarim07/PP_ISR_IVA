@@ -119,13 +119,13 @@ if Customer_uploaded_file:
     st.write(Customer.shape)
     st.divider()
 
-    def activa(df):
+    def tipo2(df):
         result = df['Source'] == df['Tipo']
         return result
     aux_bal = pd.concat([Auxiliar, Balanza])
     aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
     aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
-    # aux_bal = activa(aux_bal)
+    aux_bal = tipo2(aux_bal)
     alldata = pd.concat([aux_bal,Customer])
     # alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
     st.dataframe(alldata)
