@@ -22,9 +22,9 @@ st.subheader('Cargar los siguientes archivos: Auxiliar, Balanza y Customer del p
 st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
-col1, col2, col3 = st.columns(3)
+tab1, tab2, tab3, tab4 = st.tabs(["Carga de Archivos", "Auxiliar", "Balanza", "Customer"])
 
-with col1:
+with tab1:
     # st.caption('Cargar el Auxiliar del periodo')
     Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
     if Auxiliar_uploaded_file:
@@ -33,7 +33,7 @@ with col1:
                             dtype = {'Period': str, 'Account': str, 'DocumentNo': str, 'Document Header Text': str,
                                 'Cost Ctr': str, 'Assignment': str,})
 
-with col2:
+
     Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
     if Balanza_uploaded_file:
         st.markdown('---')
@@ -42,7 +42,7 @@ with col2:
                           dtype = {'Account': str, 'Description': str, 'CoCode': str,})
 
 
-with col3:
+
     Customer_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el customer del periodo', type='xlsx')
     if Customer_uploaded_file:
         st.markdown('---')
@@ -61,19 +61,23 @@ with col3:
     #                          sheet_name = 'GL_Accounts', engine='openpyxl',
     #                         dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
     
-Auxiliar = Auxiliar.dropna(subset=['Account'])
-Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
-Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
-Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
-st.subheader('Auxiliar')
-st.dataframe(Auxiliar)
-st.write(Auxiliar.shape)
-st.divider()
-    
-st.subheader('Balanza')
-st.dataframe(Balanza)
-st.write(Balanza.shape)
-st.divider()
+
+with tab2:
+    Auxiliar = Auxiliar.dropna(subset=['Account'])
+    Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
+    Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
+    Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
+    st.subheader('Auxiliar')
+    st.dataframe(Auxiliar)
+    st.write(Auxiliar.shape)
+    st.divider()
+
+
+with tab3:
+    st.subheader('Balanza')
+    st.dataframe(Balanza)
+    st.write(Balanza.shape)
+    st.divider()
     
     def company_code(row):
         if row['Varios'] == ' Company Code':
@@ -87,6 +91,8 @@ st.divider()
         else:
             return None
 
+
+with tab4:    
     Customer['CoCode'] = Customer.apply(company_code, axis=1)    
     Customer['CustomerName'] = Customer.apply(customername, axis=1)
     Customer['CoCode'].fillna(method='ffill', inplace=True)
