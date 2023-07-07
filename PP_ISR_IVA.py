@@ -122,7 +122,11 @@ if Customer_uploaded_file:
     aux_bal = pd.concat([Auxiliar, Balanza])
     aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
     aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
-    summary = pd.concat([aux_bal,Customer])
+    alldata = pd.concat([aux_bal,Customer])
+    alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
+    st.dataframe(alldata)
+
+    summary = alldata.groupby(by=['CoCode'], as_index=False)['Monto'].sum()
     st.dataframe(summary)
 
 
