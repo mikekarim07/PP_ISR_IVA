@@ -28,7 +28,7 @@ st.write("Streamlit version:", st.__version__)
 Cat_ctas_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el Catalogo de Cuentas', type='xlsx')
 if Cat_ctas_uploaded_file:
     st.markdown('---')
-    Catalogo = pd.read_excel(CAt_ctas_uploaded_file, engine='openpyxl',
+    Catalogo = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl',
                             dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
 
 # st.caption('Cargar el Auxiliar del periodo')
