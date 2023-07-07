@@ -69,6 +69,8 @@ if Customer_uploaded_file:
     Balanza[['Account']] = Balanza[['Account']].apply(pd.to_numeric)
     Balanza = Balanza[Balanza['Account']>2000000000]
     Balanza[['Account']] = Balanza[['Account']].astype('string')
+    Balanza = Balanza[Balanza['Monto']<0]
+    Balanza['Monto'] = Balanza['Monto'].abs()
     st.dataframe(Balanza)
     st.write(Balanza.shape)
     st.divider()
@@ -114,7 +116,8 @@ if Customer_uploaded_file:
     st.write(Customer.shape)
     st.divider()
 
-
+    summary = pd.concat([Auxiliar, Balanza])
+    st.dataframe(summary)
 
 
     # Nuevo dataframe unicamente con las columnas de Account en FBL3N y GL_Account en Parametros
