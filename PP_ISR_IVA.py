@@ -25,7 +25,7 @@ st.write("Streamlit version:", st.__version__)
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.caption('Cargar el Auxiliar del periodo')
+    # st.caption('Cargar el Auxiliar del periodo')
     Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
     if Auxiliar_uploaded_file:
         st.markdown('---')
