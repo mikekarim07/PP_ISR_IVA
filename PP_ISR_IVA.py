@@ -17,7 +17,7 @@ directory = os.getcwd()
 
 
 st.set_page_config(page_title='TAX - Pago Provisional')
-st.image(Diseño sin título.png)
+st.image('https://github.com/mikekarim07/PP_ISR_IVA/blob/main/Dise%C3%B1o%20sin%20t%C3%ADtulo.png', width:50)
 st.title('Cálculo del Pago Provisional 📈')
 st.subheader('Cargar los siguientes archivos: Auxiliar, Balanza y Customer del periodo')
 st.write(directory)
