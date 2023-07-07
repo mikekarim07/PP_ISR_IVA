@@ -119,8 +119,13 @@ if Customer_uploaded_file:
     st.write(Customer.shape)
     st.divider()
 
+    def tipo(row):
+        if row['Source'] == row['Tipo']:
+            return row['Nombres']
+        else:
+            return None
     def tipo2(df):
-        result = df['Source'] == df['Tipo']
+        result = aux_bal['Source'] == aux_bal['Tipo']
         return result
     aux_bal = pd.concat([Auxiliar, Balanza])
     aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
