@@ -67,6 +67,7 @@ if Customer_uploaded_file:
 
     st.subheader('Balanza')
     Balanza['Monto'] = Balanza['Saldo Final'] - Balanza['Saldo Inicial']
+    Balanza['Source'] = 'Balanza'
     Balanza[['Account']] = Balanza[['Account']].apply(pd.to_numeric)
     Balanza = Balanza[Balanza['Account']>2000000000]
     Balanza[['Account']] = Balanza[['Account']].astype('string')
@@ -118,6 +119,8 @@ if Customer_uploaded_file:
     st.divider()
 
     summary = pd.concat([Auxiliar, Balanza])
+    summary = summary.merge(Catalogo, left_on='Account', right_on='Account', how='left')
+    summary = summary[summary['Tipo']!='No Aplica']
     st.dataframe(summary)
 
 
