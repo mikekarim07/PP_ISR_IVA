@@ -68,14 +68,15 @@ with tab1:
     
 
 with tab2:
-    Auxiliar = Auxiliar.dropna(subset=['Account'])
-    Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
-    Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
-    Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
-    st.subheader('Auxiliar')
-    st.dataframe(Auxiliar)
-    st.write(Auxiliar.shape)
-    st.divider()
+    if Auxiliar is not None and not Auxiliar.empty:
+        Auxiliar = Auxiliar.dropna(subset=['Account'])
+        Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
+        Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
+        Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
+        st.subheader('Auxiliar')
+        st.dataframe(Auxiliar)
+        st.write(Auxiliar.shape)
+        st.divider()
 
 
 with tab3:
