@@ -22,26 +22,31 @@ st.subheader('Cargar los siguientes archivos: Auxiliar, Balanza y Customer del p
 st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
-st.caption('Cargar el Auxiliar del periodo')
-Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
-if Auxiliar_uploaded_file:
-    st.markdown('---')
-    Auxiliar = pd.read_excel(Auxiliar_uploaded_file, engine='openpyxl', skiprows=5, 
-                        dtype = {'Period': str, 'Account': str, 'DocumentNo': str, 'Document Header Text': str,
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.caption('Cargar el Auxiliar del periodo')
+    Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
+    if Auxiliar_uploaded_file:
+        st.markdown('---')
+        Auxiliar = pd.read_excel(Auxiliar_uploaded_file, engine='openpyxl', skiprows=5, 
+                            dtype = {'Period': str, 'Account': str, 'DocumentNo': str, 'Document Header Text': str,
                                 'Cost Ctr': str, 'Assignment': str,})
 
-Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
-if Balanza_uploaded_file:
-    st.markdown('---')
-    Balanza = pd.read_csv(Balanza_uploaded_file, sep='|', header=None,
+with col2:
+    Balanza_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene la Balanza', type='txt')
+    if Balanza_uploaded_file:
+        st.markdown('---')
+        Balanza = pd.read_csv(Balanza_uploaded_file, sep='|', header=None,
                           names=['Account', 'Description', 'Saldo Inicial', 'Cargos', 'Abonos', 'Saldo Final', 'CoCode'], encoding='iso-8859-1',
                           dtype = {'Account': str, 'Description': str, 'CoCode': str,})
 
 
-Customer_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el customer del periodo', type='xlsx')
-if Customer_uploaded_file:
-    st.markdown('---')
-    Customer = pd.read_excel(Customer_uploaded_file, engine='openpyxl',
+with col3:
+    Customer_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el customer del periodo', type='xlsx')
+    if Customer_uploaded_file:
+        st.markdown('---')
+        Customer = pd.read_excel(Customer_uploaded_file, engine='openpyxl',
                         names=['Varios', '*', 'St', 'Assignment', 'Nombres', 'DocumentNo', 'Typ', 'LCurr', 'Clrng doc.', 'Tx',
                               'Doc. Date', 'Reference', 'Text', 'Amt in loc.cur.', 'Customer'],
                         index_col=None)
