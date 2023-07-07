@@ -53,7 +53,8 @@ if Customer_uploaded_file:
                         names=['Varios', '*', 'St', 'Assignment', 'Nombres', 'DocumentNo', 'Typ', 'LCurr', 'Clrng doc.', 'Tx',
                               'Doc. Date', 'Reference', 'Text', 'Amt in loc.cur.', 'Customer'],
                         index_col=None)
-
+    st.dataframe(Catalogo)
+    
     Auxiliar = Auxiliar.rename(columns={"CoCd": "CoCode", "Amount in local cur.": "Monto"})
     Auxiliar = Auxiliar.dropna(subset=['Account'])
     Auxiliar = Auxiliar[Auxiliar['Monto']<0]
