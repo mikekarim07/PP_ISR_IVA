@@ -112,16 +112,17 @@ if Customer_uploaded_file:
     Customer['Monto'] = Customer.apply(montosiniva, axis=1)    
     Customer = Customer.groupby(by=['CoCode', 'Customer'], as_index=False)['Monto'].sum()
     Customer = Customer[Customer['Monto']>0]
+    Customer = Customer.rename(columns={"Customer": "Account"})
     
     st.subheader('Customer')
     st.dataframe(Customer)
     st.write(Customer.shape)
     st.divider()
 
-    summary = pd.concat([Auxiliar, Balanza])
-    st.dataframe(summary)
-    summary = summary.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
-    summary = summary[summary['Tipo']!='No Aplica']
+    aux_bal = pd.concat([Auxiliar, Balanza])
+    aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
+    aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
+    summary = pd.concat([aux_bal,Customer])
     st.dataframe(summary)
 
 
