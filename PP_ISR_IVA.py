@@ -23,7 +23,7 @@ st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
 
-tab1, tab2, tab3 = st.tabs(["Auxiliar", "Balanza", "Customer"])
+
 
 # st.caption('Cargar el Auxiliar del periodo')
 Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
@@ -62,19 +62,19 @@ if Customer_uploaded_file:
     #                         dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
     
 
-with tab1:
+
    
-        Auxiliar = Auxiliar.dropna(subset=['Account'])
-        Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
-        Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
-        Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
-        st.subheader('Auxiliar')
-        st.dataframe(Auxiliar)
-        st.write(Auxiliar.shape)
-        st.divider()
+    Auxiliar = Auxiliar.dropna(subset=['Account'])
+    Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
+    Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
+    Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
+    st.subheader('Auxiliar')
+    st.dataframe(Auxiliar)
+    st.write(Auxiliar.shape)
+    st.divider()
 
 
-with tab2:
+
     st.subheader('Balanza')
     st.dataframe(Balanza)
     st.write(Balanza.shape)
@@ -93,7 +93,7 @@ with tab2:
             return None
 
 
-with tab3:    
+
     Customer['CoCode'] = Customer.apply(company_code, axis=1)    
     Customer['CustomerName'] = Customer.apply(customername, axis=1)
     Customer['CoCode'].fillna(method='ffill', inplace=True)
