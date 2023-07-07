@@ -121,16 +121,16 @@ if Customer_uploaded_file:
 
     def tipo(row):
         if row['Source'] == row['Tipo']:
-            return row['Nombres']
+            return 'Si'
         else:
-            return None
+            return 'No'
     def tipo2(df):
         result = aux_bal['Source'] == aux_bal['Tipo']
         return result
     aux_bal = pd.concat([Auxiliar, Balanza])
     aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
     aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
-    aux_bal = tipo2(aux_bal)
+    aux_bal = tipo(aux_bal)
     alldata = pd.concat([aux_bal,Customer])
     # alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
     st.dataframe(alldata)
