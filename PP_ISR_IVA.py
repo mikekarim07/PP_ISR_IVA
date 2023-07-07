@@ -125,6 +125,7 @@ if Customer_uploaded_file:
     aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
     # aux_bal = tipo(aux_bal)
     aux_bal['new'] = np.where((aux_bal['Source'] == aux_bal['Tipo']), 'ok', 'no')
+    aux_bal = aux_bal[aux_bal['new']=='ok']
     alldata = pd.concat([aux_bal,Customer])
     # alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
     st.dataframe(alldata)
