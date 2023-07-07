@@ -54,10 +54,11 @@ if Customer_uploaded_file:
                               'Doc. Date', 'Reference', 'Text', 'Amt in loc.cur.', 'Customer'],
                         index_col=None)
 
+    Auxiliar = Auxiliar.rename(columns={"CoCd": "CoCode", "Amount in local cur.": "Monto"})
     Auxiliar = Auxiliar.dropna(subset=['Account'])
-    Auxiliar = Auxiliar[Auxiliar['Amount in local cur.']<0]
-    Auxiliar = Auxiliar.groupby(by=['Account', 'CoCd'], as_index=False)['Amount in local cur.'].sum()
-    Auxiliar['Amount in local cur.'] = Auxiliar['Amount in local cur.'].abs()
+    Auxiliar = Auxiliar[Auxiliar['Monto']<0]
+    Auxiliar = Auxiliar.groupby(by=['Account', 'CoCode'], as_index=False)['Monto'].sum()
+    Auxiliar['Monto'] = Auxiliar['Monto'].abs()
     st.subheader('Auxiliar')
     st.dataframe(Auxiliar)
     st.write(Auxiliar.shape)
@@ -65,6 +66,8 @@ if Customer_uploaded_file:
 
     st.subheader('Balanza')
     Balanza['Monto'] = Balanza['Saldo Final'] - Balanza['Saldo Inicial']
+    
+    Balanza = Balanza[Balanza['Account']>2000000000]
     st.dataframe(Balanza)
     st.write(Balanza.shape)
     st.divider()
