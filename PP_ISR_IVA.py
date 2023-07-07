@@ -119,18 +119,12 @@ if Customer_uploaded_file:
     st.write(Customer.shape)
     st.divider()
 
-    def tipo(row):
-        if row['Source'] == row['Tipo']:
-            return 'Si'
-        else:
-            return 'No'
-    def tipo2(df):
-        result = aux_bal['Source'] == aux_bal['Tipo']
-        return result
+    
     aux_bal = pd.concat([Auxiliar, Balanza])
     aux_bal = aux_bal.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
     aux_bal = aux_bal[aux_bal['Tipo']!='No Aplica']
-    aux_bal = tipo(aux_bal)
+    # aux_bal = tipo(aux_bal)
+    aux_bal['new'] = np.where((aux_bal['Source'] == aux_bal['Tipo']), 'ok', 'no')
     alldata = pd.concat([aux_bal,Customer])
     # alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
     st.dataframe(alldata)
