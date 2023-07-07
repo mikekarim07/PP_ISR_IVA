@@ -119,7 +119,8 @@ if Customer_uploaded_file:
     st.divider()
 
     summary = pd.concat([Auxiliar, Balanza])
-    new_summary = summary.merge(Catalogo, left_on='Account', right_on='Account', how='left')
+    st.dataframe(summary)
+    summary = summary.merge(Catalogo, left_on='Account', right_on='Cuenta', how='left')
     summary = summary[summary['Tipo']!='No Aplica']
     st.dataframe(summary)
 
