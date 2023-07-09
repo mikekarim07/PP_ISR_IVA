@@ -139,6 +139,7 @@ if Customer_uploaded_file:
     coeficientes = coeficientes[['CoCode', 'Enero']]
     st.dataframe(coeficientes)
     pago_prov = summary.merge(coeficientes, left_on='CoCode', right_on='CoCode', how='left')
+    pago_prov['Utilidad Fiscal'] = pago_prov['Monto'] * pago_prov['Enero']
     st.dataframe(pago_prov)
 
 
