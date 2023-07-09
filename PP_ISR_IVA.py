@@ -141,7 +141,6 @@ if Customer_uploaded_file:
     pago_prov = summary.merge(coeficientes, left_on='CoCode', right_on='CoCode', how='left')
     pago_prov['Utilidad Fiscal'] = pago_prov['Monto'] * pago_prov['Enero']
     pago_prov['Tasa ISR'] = .30
-    pago_prov.loc[:, "Tasa ISR"] = pago_prov["Tasa ISR"].map('{:.2%}'.format)
     pago_prov['ISR'] = pago_prov['Utilidad Fiscal'] * pago_prov['Tasa ISR']
     st.dataframe(pago_prov)
 
