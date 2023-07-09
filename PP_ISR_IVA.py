@@ -30,7 +30,7 @@ if Cat_ctas_uploaded_file:
     st.markdown('---')
     Catalogo = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name='Catalogo',
                             dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
-    coeficientes = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name=='CU'
+    coeficientes = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name=='CU',
                                  dtype = {'CoCode': str,})
 
 # st.caption('Cargar el Auxiliar del periodo')
