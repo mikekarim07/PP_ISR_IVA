@@ -136,8 +136,10 @@ if Customer_uploaded_file:
     summary = alldata.groupby(by=['CoCode'], as_index=False)['Monto'].sum()
     st.dataframe(summary)
 
+    coeficientes = coeficientes[['CoCode', 'Enero']]
+    st.dataframe(coeficientes)
     pago_prov = summary.merge(coeficientes, left_on='CoCode', right_on='CoCode', how='left')
-    st.dataframe(pagp_prov)
+    st.dataframe(pago_prov)
 
 
     # Nuevo dataframe unicamente con las columnas de Account en FBL3N y GL_Account en Parametros
