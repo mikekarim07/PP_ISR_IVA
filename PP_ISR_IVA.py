@@ -31,7 +31,7 @@ if Cat_ctas_uploaded_file:
     Catalogo = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name='Catalogo',
                             dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
     coeficientes = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name=='CU'
-                                 dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
+                                 dtype = {'CoCode': str,})
 
 # st.caption('Cargar el Auxiliar del periodo')
 Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
