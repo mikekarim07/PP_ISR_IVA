@@ -11,7 +11,7 @@ import os
 import codecs
 
 #to get the current working directory
-directory = os.getcwd()
+# directory = os.getcwd()
 
 
 
@@ -28,8 +28,10 @@ st.write("Streamlit version:", st.__version__)
 Cat_ctas_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el Catalogo de Cuentas', type='xlsx')
 if Cat_ctas_uploaded_file:
     st.markdown('---')
-    Catalogo = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl',
+    Catalogo = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name='Catalogo',
                             dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
+    coeficientes = pd.read_excel(Cat_ctas_uploaded_file, engine='openpyxl', sheet_name=='CU'
+                                 dtype = {'Cuenta': str, 'Descripcion': str, 'Tipo': str,})
 
 # st.caption('Cargar el Auxiliar del periodo')
 Auxiliar_uploaded_file = st.file_uploader('Selecciona el Archivo que contiene el auxiliar del periodo', type='xlsx')
@@ -133,6 +135,9 @@ if Customer_uploaded_file:
 
     summary = alldata.groupby(by=['CoCode'], as_index=False)['Monto'].sum()
     st.dataframe(summary)
+
+    pago_prov = summary.merge(coeficientes, left_on='CoCode', right_on='CoCode', how='left')
+    st.dataframe(pagp_prov)
 
 
     # Nuevo dataframe unicamente con las columnas de Account en FBL3N y GL_Account en Parametros
