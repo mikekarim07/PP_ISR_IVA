@@ -21,7 +21,7 @@ image_url = 'https://github.com/mikekarim07/PP_ISR_IVA/blob/main/kor_logo.png'
 st.image("kor_logo_web.png", width=200)
 st.title('Cálculo del Pago Provisional 📈')
 st.subheader('Cargar los siguientes archivos: Auxiliar, Balanza y Customer del periodo')
-st.write(directory)
+# st.write(directory)
 st.write("Streamlit version:", st.__version__)
 #
 
