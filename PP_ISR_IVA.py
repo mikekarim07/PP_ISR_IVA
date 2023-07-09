@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import plotly.express as px
 import base64
+import io
 from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 #importing the os module
@@ -145,23 +146,23 @@ if Customer_uploaded_file:
     st.dataframe(pago_prov)
 
     
-buffer = io.BytesIO()
+    buffer = io.BytesIO()
 
-# Create a Pandas Excel writer using XlsxWriter as the engine.
-with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-    # Write each dataframe to a different worksheet.
-    pago_prov.to_excel(writer, sheet_name='Pago Provisional')
-    alldata.to_excel(writer, sheet_name='Consolidado')
-    Auxiliar.to_excel(writer, sheet_name='Auxiliar')
-    Balanza.to_excel(writer, sheet_name='Balanza')
-    Customer.to_excel(writer, sheet_name='Customer')
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        # Write each dataframe to a different worksheet.
+        pago_prov.to_excel(writer, sheet_name='Pago Provisional')
+        alldata.to_excel(writer, sheet_name='Consolidado')
+        Auxiliar.to_excel(writer, sheet_name='Auxiliar')
+        Balanza.to_excel(writer, sheet_name='Balanza')
+        Customer.to_excel(writer, sheet_name='Customer')
 
-    writer.save()
+        writer.save()
 
-# Set up download link
-b64 = base64.b64encode(buffer.getvalue()).decode()
-href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Pago_provisional.xlsx">Download Excel File</a>'
-st.markdown(href, unsafe_allow_html=True)
+    # Set up download link
+    b64 = base64.b64encode(buffer.getvalue()).decode()
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Pago_provisional.xlsx">Download Excel File</a>'
+    st.markdown(href, unsafe_allow_html=True)
 
     # Nuevo dataframe unicamente con las columnas de Account en FBL3N y GL_Account en Parametros
     # si va FBL3N_ctas = df_FBL3N[['Account']].astype(str)
