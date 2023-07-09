@@ -56,6 +56,7 @@ if Customer_uploaded_file:
                         names=['Varios', '*', 'St', 'Assignment', 'Nombres', 'DocumentNo', 'Typ', 'LCurr', 'Clrng doc.', 'Tx',
                               'Doc. Date', 'Reference', 'Text', 'Amt in loc.cur.', 'Customer'],
                         index_col=None)
+    st.subheader('Catalogo de Cuentas')
     st.dataframe(Catalogo)
     
     Auxiliar = Auxiliar.rename(columns={"CoCd": "CoCode", "Amount in local cur.": "Monto"})
@@ -65,8 +66,9 @@ if Customer_uploaded_file:
     Auxiliar['Monto'] = Auxiliar['Monto'].abs()
     Auxiliar['Source'] = 'Auxiliar'
     st.subheader('Auxiliar')
-    st.dataframe(Auxiliar)
     st.write(Auxiliar.shape)
+    st.dataframe(Auxiliar)
+    
     st.divider()
 
     st.subheader('Balanza')
@@ -77,8 +79,9 @@ if Customer_uploaded_file:
     Balanza[['Account']] = Balanza[['Account']].astype('string')
     Balanza = Balanza[Balanza['Monto']<0]
     Balanza['Monto'] = Balanza['Monto'].abs()
-    st.dataframe(Balanza)
     st.write(Balanza.shape)
+    st.dataframe(Balanza)
+    
     st.divider()
     
     def company_code(row):
@@ -119,8 +122,9 @@ if Customer_uploaded_file:
     Customer = Customer.rename(columns={"Customer": "Account"})
     
     st.subheader('Customer')
-    st.dataframe(Customer)
     st.write(Customer.shape)
+    st.dataframe(Customer)
+    
     st.divider()
 
     
@@ -132,19 +136,32 @@ if Customer_uploaded_file:
     aux_bal = aux_bal[aux_bal['new']=='ok']
     alldata = pd.concat([aux_bal,Customer])
     # alldata = alldata[['Account', 'CoCode', 'Source', 'Descripcion', 'Monto']]
+    st.subheader('Datos consolidados')
+    st.write(alldata.shape)
     st.dataframe(alldata)
-
+    st.divider()
     summary = alldata.groupby(by=['CoCode'], as_index=False)['Monto'].sum()
+    
+    st.subheader('Resumen')
+    st.write(summary.shape)
     st.dataframe(summary)
-
+    st.divider()
+    
     coeficientes = coeficientes[['CoCode', 'Enero']]
+    st.subheader('Coeficientes de Utilidad')
+    st.write(coeficientes.shape)
     st.dataframe(coeficientes)
+    st.divider()
+    
     pago_prov = summary.merge(coeficientes, left_on='CoCode', right_on='CoCode', how='left')
     pago_prov['Utilidad Fiscal'] = pago_prov['Monto'] * pago_prov['Enero']
     pago_prov['Tasa ISR'] = .30
     pago_prov['ISR'] = pago_prov['Utilidad Fiscal'] * pago_prov['Tasa ISR']
+    
+    st.subheader('Calculo de Pago Provisional')
+    st.write(pago_prov.shape)
     st.dataframe(pago_prov)
-
+    st.divider()
     
     buffer = io.BytesIO()
 
