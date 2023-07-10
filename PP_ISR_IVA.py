@@ -17,7 +17,15 @@ import codecs
 
 
 
-st.set_page_config(page_title='TAX - Pago Provisional')
+# st.set_page_config(page_title='TAX - Pago Provisional')
+
+st.set_page_config(page_title='TAX - Pago Provisional',
+    menu_items=None,
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+
 image_url = 'https://github.com/mikekarim07/PP_ISR_IVA/blob/main/kor_logo.png'
 st.image("kor_logo_web.png", width=200)
 st.title('Cálculo del Pago Provisional 📈')
