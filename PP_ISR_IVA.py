@@ -13,17 +13,18 @@ import codecs
 
 #to get the current working directory
 # directory = os.getcwd()
+hide_st_style ="""
+        <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 
+st.set_page_config(page_title='TAX - Pago Provisional')
 
-# st.set_page_config(page_title='TAX - Pago Provisional')
-
-st.set_page_config(page_title='TAX - Pago Provisional',
-    menu_items=None,
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
 
 
 image_url = 'https://github.com/mikekarim07/PP_ISR_IVA/blob/main/kor_logo.png'
